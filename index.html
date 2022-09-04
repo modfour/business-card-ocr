@@ -18,18 +18,22 @@
                         <p>選択した画像から文字情報を読み取り、vCard(.vcf)形式でダウンロードすることができます。</p>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6 d-flex align-items-center">
-                            ここにファイル選択用のimputフィールド
-                        </div>
-                        <div class="col-sm-6">
-                            <button id="capture" class="btn btn-primary">Capture</button>
-                        </div>        
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="inputGroupFile"  aria-describedby="inputGroupFileAddon" aria-label="Capture">
+                            <button class="btn btn-primary" type="button" id="inputGroupFileAddon">Capture</button>
+                        </div>                                  
                     </div>
                     <div class="row">
                         <p>この下に取り込んだデータを出力する</p>
+                        <div id="image_unit"></div>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
+            document.getElementById("inputGroupFileAddon").addEventListener("click",function(){
+                alert("Captureボタンがクリックされました");
+            });
+        </script>
     </body>
 </html>
