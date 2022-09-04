@@ -5,6 +5,7 @@ const isSupportedFileFormat = function(fileName){
     }
     return false;
 }
+
 const app = Vue.createApp({
     data() {
         return {
@@ -20,14 +21,23 @@ const app = Vue.createApp({
 
             if(isSupportedFileFormat(this.filepath)){
                 const fileReader = new FileReader();
+                const that = this;
                 fileReader.onload = (function(e){
-                    vm.dataUrl = e.target.result;
+                    that.dataUrl = e.target.result;
                 });
                 fileReader.readAsDataURL(inputFileDOM.files[0]);
                 this.isFileSelected = true;
             }else{
                 alert('.jpg,.png,.bmp,.pbmのみサポートしています。')
             }
+        },
+        
+        runOcr: function(){
+            Tesseract.recognize(this.dataUrl, 'jpn', 
+                { logger: m => console.log(m) }
+            ).then(({ data : { text } }) => {
+                console.log(text);
+            })
         }
     }
 });
