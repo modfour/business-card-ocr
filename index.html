@@ -8,28 +8,84 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <header class="text-center bg-primary">
-            <h1 class="text-white">名刺情報取り込み</h1>
-        </header>
-        <div class="container mt-2">
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="https://modfour.github.io/">Mod4's WebSite</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="https://modfour.github.io/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="https://twitter.com/kyo_0xA">Twitter</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="https://github.com/modfour">GitHub</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="https://modfour.github.io/policy.html">Policy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>    
+        <div class="container-sm pt-2 pb-5 bg-white">
             <div class="row">
-                <div class="col-sm-8 offset-sm-2">
-                    <div class="row">
-                        <p>選択した画像から文字情報を読み取り、vCard(.vcf)形式でダウンロードすることができます。</p>
+                <h1>名刺情報取り込み</h1>
+                <p>選択した画像から文字情報を読み取り、vCard(.vcf)形式でダウンロードすることができます。</p>
+            </div>
+            <div class="row">
+                <div class="input-group">
+                    <input type="file" class="form-control" id="inputGroupFile" aria-describedby="inputGroupFileAddon" aria-label="Capture">
+                    <button class="btn btn-primary" type="button" id="inputGroupFileAddon">Capture</button>
+                </div>                                  
+            </div>
+            <div id="image_unit">
+                <div class="row mt-3">
+                    <h2>選択された画像</h2>
+                </div>
+                <div class="row" v-if="isFileSelected">
+                    <img :src="filepath" alt="selected image">
+                    <p>{{ filepath }}</p>
+                </div>
+            </div>
+            <div id="result_unit">
+                <div class="row mt-3">
+                    <h2>抽出結果</h2>
+                    <label for="companyName" class="form-label mt-2">会社名</label>
+                    <div class="input-group">
+                        <input type="text" id="companyName" class="form-control" placeholder="会社名">
                     </div>
-                    <div class="row">
-                        <div class="input-group">
-                            <input type="file" class="form-control" id="inputGroupFile"  aria-describedby="inputGroupFileAddon" aria-label="Capture">
-                            <button class="btn btn-primary" type="button" id="inputGroupFileAddon">Capture</button>
-                        </div>                                  
+
+                    <label for="departmentName" class="form-label mt-2">部門名</label>
+                    <div class="input-group">
+                        <input type="text" id="departmentName"class="form-control" placeholder="部門名">
                     </div>
-                    <div class="row">
-                        <p>この下に取り込んだデータを出力する</p>
-                        <div id="image_unit"></div>
+
+                    <label for="personalName" class="form-label mt-2">個人名</label>
+                    <div class="input-group">
+                        <input type="text" id="personalName"class="form-control" placeholder="個人名">
                     </div>
+
+                    <label for="phoneNumber" class="form-label mt-2">電話番号</label>
+                    <div class="input-group">
+                        <input type="text" id="phoneNumber"class="form-control" placeholder="電話番号">
+                    </div>
+
+                    <label for="email" class="form-label mt-2">メールアドレス</label>
+                    <div class="input-group">
+                        <input type="text" id="email"class="form-control" placeholder="メールアドレス">
+                    </div>
+
+                    <button class="btn btn-primary mt-3">Export vCard(.vcf)</button>
                 </div>
             </div>
         </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
         <script>
             document.getElementById("inputGroupFileAddon").addEventListener("click",function(){
                 alert("Captureボタンがクリックされました");
