@@ -22,7 +22,6 @@ const convertText = function(string){
     ];
     let result = string;
     map.forEach(function(pattern){
-        console.log(pattern.searchValue);
         result = result.replace(new RegExp(pattern.searchValue, 'g'),pattern.replaceValue);
     });
     return result;
@@ -33,17 +32,35 @@ const app = Vue.createApp({
         return {
             dataUrl: '',
             filepath: '',
-            isFileSelected: false,
+            isFileSelected: false, // for debug only
+            isFileCaptured: false,
             recognizedText: '',
-            options: []
+            options: [],
+            progressWidth: 'width: 0%',
+            progressNumber: 0
         }
     },
     methods: {
         runOcr: function(){
-            Tesseract.recognize(this.dataUrl, 'jpn', 
-                { logger: m => console.log(m) }
-            ).then(({ data : { text } }) => {
-                console.log(text);
+            let lastStatus = '';
+            let lastProgress = 0;
+            const that = this;
+            Tesseract.recognize(this.dataUrl, 'jpn', {
+                logger: m => {
+                    let tmpProgressNumber = that.progressNumber / 25.0
+                    console.log(m);
+                    if (lastStatus === m['status']){
+                        tmpProgressNumber -= lastProgress;
+                    }
+                    lastProgress = m['status'];
+                    lastProgress = m['progress'];
+                    tmpProgressNumber += lastProgress
+
+                    that.progressNumber = tmpProgressNumber * 25.0;
+                    that.progressWidth = 'width: ' + tmpProgressNumber * 25.0 + '%';
+                }
+            }).then(({ data : { text } }) => {
+                this.isFileCaptured = true;
                 this.recognizedText = convertText(text);
                 this.options = convertText(text).split('\n');
             })
