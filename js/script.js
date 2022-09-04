@@ -76,14 +76,14 @@ const makeTimeStamp = function(){
 
 const createVcfString = function(){
     let result = '';
-    result += 'BEGIN:VCARD\n';
-    result += 'VERSION:3.0\n';
+    result += 'BEGIN:VCARD\r\n';
+    result += 'VERSION:3.0\r\n';
     result += 'FN:'             + document.getElementById('personalName'    ).value + '\r\n';
     result += 'EMAIL:'          + document.getElementById('email'           ).value + '\r\n';
-    result += 'TEL;WORK;VOICE'  + document.getElementById('phoneNumber'     ).value + '\r\n';
+    result += 'TEL;WORK;VOICE:' + document.getElementById('phoneNumber'     ).value + '\r\n';
     result += 'ORG:'            + document.getElementById('companyName'     ).value + ';'
                                 + document.getElementById('departmentName'  ).value + '\r\n';
-    result += 'REV:'            + makeTimeStamp();
+    result += 'REV:'            + makeTimeStamp()                                   + '\r\n';
     result += 'END:VCARD';
     return result;
 }
