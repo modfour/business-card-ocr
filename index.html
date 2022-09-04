@@ -113,10 +113,10 @@
                                 vm.dataUrl = e.target.result;
                             });
                             fileReader.readAsDataURL(inputFileDOM.files[0]);
+                            this.isFileSelected = true;
                         }else{
                             alert('.jpg,.png,.bmp,.pbmのみサポートしています。')
                         }
-                        this.isFileSelected = true;
                     }
                 }
             });
