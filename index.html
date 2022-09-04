@@ -55,6 +55,11 @@
             <div id="result_unit">
                 <div class="row mt-3">
                     <h2>抽出結果</h2>
+                    <label for="recognizedText" class="form-label mt-2">テキスト</label>
+                    <div class="input-group">
+                        <textarea id="recognizedText" class="form-control" placeholder="テキストデータ">{{ recognizedText }}</textarea>
+                    </div>
+
                     <label for="companyName" class="form-label mt-2">会社名</label>
                     <div class="input-group">
                         <input type="text" id="companyName" class="form-control" placeholder="会社名">
