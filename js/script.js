@@ -34,7 +34,8 @@ const app = Vue.createApp({
             dataUrl: '',
             filepath: '',
             isFileSelected: false,
-            recognizedText: ''
+            recognizedText: '',
+            options: []
         }
     },
     methods: {
@@ -44,6 +45,7 @@ const app = Vue.createApp({
             ).then(({ data : { text } }) => {
                 console.log(text);
                 this.recognizedText = convertText(text);
+                this.options = convertText(text).split('\n');
             })
         },
 
@@ -66,5 +68,34 @@ const app = Vue.createApp({
         },        
     }
 });
+
+const makeTimeStamp = function(){
+    const now = new Date();
+    return now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
+}
+
+const createVcfString = function(){
+    let result = '';
+    result += 'BEGIN:VCARD\n';
+    result += 'VERSION:3.0\n';
+    result += 'FN:'             + document.getElementById('personalName'    ).value + '\r\n';
+    result += 'EMAIL:'          + document.getElementById('email'           ).value + '\r\n';
+    result += 'TEL;WORK;VOICE'  + document.getElementById('phoneNumber'     ).value + '\r\n';
+    result += 'ORG:'            + document.getElementById('companyName'     ).value + ';'
+                                + document.getElementById('departmentName'  ).value + '\r\n';
+    result += 'REV:'            + makeTimeStamp();
+    result += 'END:VCARD';
+    return result;
+}
+
+const exportVcfFile = function(){
+    const str = createVcfString();
+    const aryStr = str.split('');
+    const blob = new Blob(aryStr, {type:"text/plain"});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'export.vcf';
+    link.click();
+}
 
 const vm = app.mount('#container');
